@@ -23,6 +23,7 @@ namespace ariel {
         Player* curr_player;
 
         public:
+        Catan(){}
         Catan(Player p1, Player p2, Player p3) {player1 = p1; player2 = p2; player3 = p3;}
         void chooseStartingPlayer();
         Board getBoard();

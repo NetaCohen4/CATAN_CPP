@@ -4,7 +4,6 @@
 #include <string>
 #include <vector>
 #include "board.hpp"
-#include "catan.hpp"
 using namespace std;
 
 namespace ariel {

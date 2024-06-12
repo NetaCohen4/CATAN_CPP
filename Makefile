@@ -1,33 +1,31 @@
-#!make -f
+# Compiler
+CXX = clang++
 
-CXX=clang
-CXXFLAGS=-std=c++11 -Werror -Wsign-conversion
-VALGRIND_FLAGS=-v --leak-check=full --show-leak-kinds=all  --error-exitcode=99
+# Compiler flags
+CXXFLAGS = -Wall -Wextra -std=c++11
 
-SOURCES=catan.cpp player.cpp board.cpp
-OBJECTS=$(subst .cpp,.o,$(SOURCES))
-LDFLAGS = -lstdc++ -lm
+# Source files
+SOURCES = player.cpp catan.cpp board.cpp demo.cpp
 
-run: demo
-	./$^
+# Object files
+OBJECTS = $(SOURCES:.cpp=.o)
 
-demo: Demo.o $(OBJECTS)
-	$(CXX) $(CXXFLAGS) $(LDFLAGS) $^ -o demo
+# Executable
+EXECUTABLE = demo
 
-#test: TestCounter.o Test.o $(OBJECTS)
-#	@echo "Compiling test executable..."
-#	$(CXX) $(CXXFLAGS) $(LDFLAGS) $^ -o test
-#	@echo "Test executable created."
+# Default rule
+all: $(EXECUTABLE)
 
-tidy:
-	clang-tidy $(SOURCES) -checks=bugprone-*,clang-analyzer-*,cppcoreguidelines-*,performance-*,portability-*,readability-*,-cppcoreguidelines-pro-bounds-pointer-arithmetic,-cppcoreguidelines-owning-memory --warnings-as-errors=-* --
+# Rule to link object files to create executable
+$(EXECUTABLE): $(OBJECTS)
+	$(CXX) $(CXXFLAGS) -o $@ $^
 
-valgrind: demo test
-	valgrind --tool=memcheck $(VALGRIND_FLAGS) ./demo 2>&1 | { egrep "lost| at " || true; }
-	valgrind --tool=memcheck $(VALGRIND_FLAGS) ./test 2>&1 | { egrep "lost| at " || true; }
-
+# Rule to compile source files into object files
 %.o: %.cpp
-	$(CXX) $(CXXFLAGS) --compile $< -o $@
+	$(CXX) $(CXXFLAGS) -c $<
 
+# Clean rule to remove object files and executable
 clean:
-	rm -f *.o demo test
+	rm -f $(OBJECTS) $(EXECUTABLE)
+
+.PHONY: all clean
