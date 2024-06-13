@@ -9,7 +9,6 @@
 #include "player.hpp"
 #include "board.hpp"
 using namespace std;
-using namespace ariel;
 
 int main()
 {
