@@ -3,15 +3,23 @@ CXX = clang++
 
 # Compiler flags
 CXXFLAGS = -Wall -Wextra -std=c++11
+LDFLAGS = -lstdc++ -lm
 
 # Source files
-SOURCES = player.cpp catan.cpp board.cpp demo.cpp
+SOURCES = player.cpp catan.cpp TestBoard.cpp demo.cpp
 
 # Object files
 OBJECTS = $(SOURCES:.cpp=.o)
 
+# Test source files
+TEST_SOURCES = TestCounter.cpp TestLand.cpp
+
+# Test object files
+TEST_OBJECTS = $(TEST_SOURCES:.cpp=.o)
+
 # Executable
 EXECUTABLE = demo
+TEST_EXECUTABLE = test
 
 # Default rule
 all: $(EXECUTABLE)
@@ -22,10 +30,19 @@ $(EXECUTABLE): $(OBJECTS)
 
 # Rule to compile source files into object files
 %.o: %.cpp
-	$(CXX) $(CXXFLAGS) -c $<
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-# Clean rule to remove object files and executable
+# Rule to create the test executable
+$(TEST_EXECUTABLE): $(TEST_OBJECTS) $(OBJECTS)
+	@echo "Compiling test executable..."
+	$(CXX) $(CXXFLAGS) $(LDFLAGS) $^ -o $@
+	@echo "Test executable created."
+
+# Separate rule for the 'test' target
+test: $(TEST_EXECUTABLE)
+
+# Clean rule to remove object files and executables
 clean:
-	rm -f $(OBJECTS) $(EXECUTABLE)
+	rm -f $(OBJECTS) $(TEST_OBJECTS) $(EXECUTABLE) $(TEST_EXECUTABLE)
 
-.PHONY: all clean
+.PHONY: all clean test
