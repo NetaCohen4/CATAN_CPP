@@ -6,16 +6,18 @@ CXXFLAGS = -Wall -Wextra -std=c++11
 LDFLAGS = -lstdc++ -lm
 
 # Source files
-SOURCES = player.cpp catan.cpp TestBoard.cpp demo.cpp
+SOURCES = player.cpp catan.cpp demo.cpp
 
 # Object files
 OBJECTS = $(SOURCES:.cpp=.o)
 
 # Test source files
-TEST_SOURCES = TestCounter.cpp TestLand.cpp
+TEST_SOURCES = TestCounter.cpp TestLand.cpp TestBoard.cpp
 
 # Test object files
 TEST_OBJECTS = $(TEST_SOURCES:.cpp=.o)
+
+HEADERS =  board.hpp land.hpp LandType.hpp 
 
 # Executable
 EXECUTABLE = demo
@@ -29,13 +31,13 @@ $(EXECUTABLE): $(OBJECTS)
 	$(CXX) $(CXXFLAGS) -o $@ $^
 
 # Rule to compile source files into object files
-%.o: %.cpp
+%.o: %.cpp $(HEADERS)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 # Rule to create the test executable
-$(TEST_EXECUTABLE): $(TEST_OBJECTS) $(OBJECTS)
+$(TEST_EXECUTABLE): $(TEST_OBJECTS)
 	@echo "Compiling test executable..."
-	$(CXX) $(CXXFLAGS) $(LDFLAGS) $^ -o $@
+	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $@ $^ 
 	@echo "Test executable created."
 
 # Separate rule for the 'test' target
@@ -45,4 +47,4 @@ test: $(TEST_EXECUTABLE)
 clean:
 	rm -f $(OBJECTS) $(TEST_OBJECTS) $(EXECUTABLE) $(TEST_EXECUTABLE)
 
-.PHONY: all clean test
+.PHONY: all clean

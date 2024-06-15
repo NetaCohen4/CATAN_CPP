@@ -1,6 +1,10 @@
+/*
+    Neta Cohen
+    325195774
+    netaco432@gmail.com
+*/
 
-#ifndef BOARD_HPP
-#define BOARD_HPP
+#pragma once
 
 #include <iostream>
 #include <vector>
@@ -31,7 +35,7 @@ public:
         for (int i = 0; i < 5; ++i) {
             for (int j = 0; j < 5; ++j) {
                 if (landMatrix[i][j]) {
-                    cout << landMatrix[i][j]->getLandType() << ", " << landMatrix[i][j]->getNum() << " ";
+                    cout << (landMatrix[i][j])->getLandType() << ", " << (landMatrix[i][j])->getNum() << " ";
                 }
             }
             std::cout << std::endl;
@@ -40,7 +44,3 @@ public:
 
 
 };
-
-
-
-#endif // BOARD_HPP

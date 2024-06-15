@@ -1,10 +1,13 @@
-
+/*
+    Neta Cohen
+    325195774
+    netaco432@gmail.com
+*/
 
 #include <iostream>
 #include <random>
 #include <string>
 #include <vector>
-#include "board.hpp"
 #include "player.hpp"
 using namespace std;
 

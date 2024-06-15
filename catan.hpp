@@ -1,7 +1,10 @@
-#pragma once
+/*
+    Neta Cohen
+    325195774
+    netaco432@gmail.com
+*/
 
-#ifndef CATAN_HPP
-#define CATAN_HPP
+#pragma once
 
 #include "player.hpp"
 #include "turn.hpp"
@@ -38,9 +41,4 @@ class Catan {
     void endTurn(Player &p) {++turn;}
     Board getBoard();
     void printWinner();
-    Player* getWinner();
 };
-
-
-
-#endif // CATAN_HPP

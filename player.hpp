@@ -1,7 +1,10 @@
-#pragma once
+/*
+    Neta Cohen
+    325195774
+    netaco432@gmail.com
+*/
 
-#ifndef PLAYER_HPP
-#define PLAYER_HPP
+#pragma once
 
 #include <string>
 #include <vector>
@@ -44,7 +47,3 @@ class Player {
         void printPoints();
 
 };
-
-
-
-#endif // PLAYER_HPP
