@@ -19,5 +19,7 @@ class Settlement {
         unsigned int location;
 
     public:
+        Settlement() {}
+        Settlement(Land* l1, Land* l2, Land* l3) {land1 = l1; land2 = l2; land3 = l3;}
 
 };

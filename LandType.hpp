@@ -19,7 +19,7 @@ enum LandType {
     Desert
 };
 
-string landTypeToString(LandType type) {
+static string landTypeToString(LandType type) {
     switch(type) {
         case Forest: return "Forest";
         case Hills: return "Hills";

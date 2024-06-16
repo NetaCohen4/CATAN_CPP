@@ -12,13 +12,24 @@
 using namespace std;
 
 
-
-void Player::placeSettelemnt(vector<string> places, vector<int> placesNum , Board board) {
+Player::~Player() {
 
 }
 
-void Player::placeRoad(vector<string> places, vector<int> placesNum , Board board) {
+void Player::placeSettelemnt(vector<string> places, vector<int> placesNum , Board board) {
+    Land* land1 = board.findLand(places[0], placesNum[0]);
+    Land* land2 = board.findLand(places[1], placesNum[1]);
+    
+    Settlement newSettlement(land1, land2, nullptr);
+    settlements.push_back(newSettlement);
+}
 
+void Player::placeRoad(vector<string> places, vector<int> placesNum , Board board) {
+    Land* land1 = board.findLand(places[0], placesNum[0]);
+    Land* land2 = board.findLand(places[1], placesNum[1]);
+    
+    Road newRoad(land1, land2);
+    roads.push_back(newRoad);
 }
 
 int Player::rollDice() {

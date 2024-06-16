@@ -30,7 +30,7 @@ class Catan {
 
     public:
     Catan(){}
-    Catan(Player p1, Player p2, Player p3) {
+    Catan(Player &p1, Player &p2, Player &p3) {
         player1 = p1; player2 = p2; player3 = p3; 
         player1.setCatan(this); player2.setCatan(this); player3.setCatan(this);
         Turn turn(&p1, &p2, &p3);

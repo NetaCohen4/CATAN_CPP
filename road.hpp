@@ -18,6 +18,7 @@ class Road {
         unsigned int location;
 
     public:
-
+        Road() {}
+        Road(Land* l1, Land* l2) {land1 = l1; land2 = l2;}
 
 };

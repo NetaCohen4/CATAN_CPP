@@ -22,9 +22,10 @@ class Land {
 
     public:
 
-        Land(){}
+        Land(){type = Desert; num = 0;}
         Land(LandType myType, unsigned int myNum) {type = myType; num = myNum;}
 
         string getLandType() {return landTypeToString(type);}
         unsigned int getNum() {return num;}
+        void printLand() {cout << landTypeToString(type) << " " << num;}
 };

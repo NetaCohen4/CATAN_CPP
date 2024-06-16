@@ -11,13 +11,14 @@ SOURCES = player.cpp catan.cpp demo.cpp
 # Object files
 OBJECTS = $(SOURCES:.cpp=.o)
 
+TEST_DIR = Testing
+
 # Test source files
-TEST_SOURCES = TestCounter.cpp TestLand.cpp TestBoard.cpp
+TEST_SOURCES = $(TEST_DIR)/TestCounter.cpp $(TEST_DIR)/TestBoard.cpp
 
 # Test object files
 TEST_OBJECTS = $(TEST_SOURCES:.cpp=.o)
 
-HEADERS =  board.hpp land.hpp LandType.hpp 
 
 # Executable
 EXECUTABLE = demo
@@ -31,7 +32,7 @@ $(EXECUTABLE): $(OBJECTS)
 	$(CXX) $(CXXFLAGS) -o $@ $^
 
 # Rule to compile source files into object files
-%.o: %.cpp $(HEADERS)
+%.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 # Rule to create the test executable

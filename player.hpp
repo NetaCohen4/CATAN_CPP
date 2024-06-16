@@ -34,6 +34,8 @@ class Player {
         Player(){}
         Player(string myName) {name = myName;}
 
+        ~Player();
+
         void setCatan(Catan* myCatan) {catan = myCatan;}
         string getName() {return name;}
 

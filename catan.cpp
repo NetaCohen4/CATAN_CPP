@@ -15,6 +15,7 @@ void Catan::chooseStartingPlayer() {
 
 Board Catan::getBoard() {
     Board board;
+    board.createBestBoard();
     return board;
 }
 
