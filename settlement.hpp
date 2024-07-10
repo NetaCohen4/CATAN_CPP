@@ -19,14 +19,34 @@ class Settlement {
         unsigned int location;
 
     public:
-        Settlement() {}
-        Settlement(Land* l1, Land* l2, Land* l3) {
-            land1 = l1; land2 = l2; land3 = l3;
-            cout << "new settlement was created\n";
+        // Default constructor
+        Settlement() : land1(nullptr), land2(nullptr), land3(nullptr), location(0) {}
+
+        // Constructor with initialization list
+        Settlement(Land* l1, Land* l2, Land* l3) : land1(l1), land2(l2), land3(l3), location(0) {
+            std::cout << "New settlement was created\n";
         }
 
         bool operator==(const Settlement& other) const {
             return ((land1 == other.land1) && (land2 == other.land2) && (land3 == other.land3));
         }
-        
+
+        Land* getLandByNum(size_t num) {
+            if (land1) {
+                if (land1->getNum() == num) {
+                    return land1;
+                }
+            }
+            if (land2) {
+                if (land1->getNum() == num) {
+                    return land2;
+                }
+            }
+            if (land1) {
+                if (land3->getNum() == num) {
+                    return land3;
+                }
+            }
+            return nullptr;
+        }
 };

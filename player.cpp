@@ -14,7 +14,7 @@ using namespace std;
 
 
 
-void Player::placeSettelemnt(vector<string> places, vector<int> placesNum , Board board) {
+void Player::placeSettelemnt(vector<string> places, vector<int> placesNum , Board &board) {
     Land* land1 = board.findLand(places[0], placesNum[0]);
     Land* land2 = board.findLand(places[1], placesNum[1]);
     Settlement newSettlement(land1, land2, nullptr);
@@ -22,7 +22,7 @@ void Player::placeSettelemnt(vector<string> places, vector<int> placesNum , Boar
     this->points++;
 }
 
-void Player::placeRoad(vector<string> places, vector<int> placesNum , Board board) {
+void Player::placeRoad(vector<string> places, vector<int> placesNum , Board &board) {
     Land* land1 = board.findLand(places[0], placesNum[0]);
     Land* land2 = board.findLand(places[1], placesNum[1]);
     
@@ -70,10 +70,45 @@ void Player::printResources() {
 }
 
 void Player::addResourcesByNum(size_t num) {
-    vector<Settlement> settlements;
-    vector<Settlement> cities;
-
+    Land* p_land;
     for (size_t i = 0; i < settlements.size(); ++i) {
-        //settlements[i]
+        p_land = settlements[i].getLandByNum(num);
+        if (p_land) {
+            addResource(p_land);
+        }
     }
+    for (size_t i = 0; i < cities.size(); ++i) {
+        p_land = cities[i].getLandByNum(num);
+        if (p_land) {
+            addResource(p_land);
+            addResource(p_land);
+        }
+    }
+}
+
+void Player::useRoadResources() {
+    if (!wood || !bricks) {
+        throw ("You don't have the resources to buy Road.");
+    }
+    wood--;
+    bricks--;
+}
+
+void Player::useSettlementResources() {
+    if (!wood || !bricks || !wool || !wheat) {
+        throw ("You don't have the resources to buy Road.");
+    }
+    --wood;
+    --bricks;
+    --wool;
+    --wheat;
+}
+
+void Player::addResource(Land* p_land) {
+    string land_name = p_land->getLandType();
+    if (land_name == "Forest") ++wood;
+    if (land_name == "Hills") ++bricks;
+    if (land_name == "Agricultural Land") ++wheat;
+    if (land_name == "Mountains") ++ore;
+    if (land_name == "Pasture Land") ++wool;
 }

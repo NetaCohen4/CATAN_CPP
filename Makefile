@@ -14,7 +14,7 @@ OBJECTS = $(SOURCES:.cpp=.o)
 TEST_DIR = Testing
 
 # Test source files
-TEST_SOURCES = $(TEST_DIR)/TestCounter.cpp $(TEST_DIR)/TestBoard.cpp $(TEST_DIR)/TestTurn.cpp
+TEST_SOURCES = $(TEST_DIR)/TestCounter.cpp $(TEST_DIR)/TestBoard.cpp
 
 # Test object files
 TEST_OBJECTS = $(TEST_SOURCES:.cpp=.o)

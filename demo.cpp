@@ -71,8 +71,13 @@ int main()
     cout << "\nGame starts!\n\n";
     // p1 has wood, bricks, and wheat, p2 has wood, ore, and wool, p3 has ore, wool, wheat.
     catan.rollDice(p1);   // Lets say it's print 4. Then, p2 gets ore from the mountations.
-    p1.placeRoad({"Forest", "Hills"}, {5, 6}, board); // p1 continues to build a road.
-    catan.endTurn();                                  // p1 ends his turn.
+    try {
+        catan.buyRoad(p1, {"Forest", "Hills"}, {5, 6});
+    }
+    catch (const char* e) {
+        cout << e << endl;
+    }
+    catan.endTurn();                                // p1 ends his turn.
 
     catan.rollDice(p2); // Lets say it's print 9. Then, p3 gets wool from the Pasture Land, p2 gets wool from the Pasture Land.
     catan.endTurn();  // p2 ends his turn.

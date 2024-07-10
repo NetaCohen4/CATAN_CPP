@@ -16,9 +16,8 @@ using namespace std;
 class Land {
 
     private:
-
         LandType type;
-        unsigned int num;
+        size_t num;
 
     public:
 
@@ -26,6 +25,6 @@ class Land {
         Land(LandType myType, unsigned int myNum) {type = myType; num = myNum;}
 
         string getLandType() {return landTypeToString(type);}
-        unsigned int getNum() {return num;}
+        size_t getNum() {return num;}
         void printLand() {cout << landTypeToString(type) << " " << num;}
 };

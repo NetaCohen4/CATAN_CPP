@@ -11,7 +11,6 @@
 #include "board.hpp"
 #include "road.hpp"
 #include "settlement.hpp"
-#include "turn.hpp"
 using namespace std;
 
 
@@ -45,14 +44,20 @@ class Player {
         string getName() {return name;}
         int getPoints() {return points;}
 
-        void placeSettelemnt(vector<string> places, vector<int> placesNum , Board board);
-        void placeRoad(vector<string> places, vector<int> placesNum , Board board);
+        void placeSettelemnt(vector<string> places, vector<int> placesNum , Board &board);
+        void placeRoad(vector<string> places, vector<int> placesNum , Board &board);
         void buildCity(Settlement* settlement);
+
         void trade(Player p2, string resource1, string resource2, int amount1, int amount2);
         void buyDevelopmentCard();
+
         void printPoints();
+
         void addResources(vector<string> &places);
         void printResources();
         void addResourcesByNum(size_t num);
 
+        void useRoadResources();
+        void useSettlementResources();
+        void addResource(Land* p_land);
 };

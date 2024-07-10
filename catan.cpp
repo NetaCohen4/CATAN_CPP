@@ -11,7 +11,7 @@ using namespace std;
 
 void Catan::chooseStartingPlayer() {
     cout << "Starting Player: " << player1.getName() << endl;
-    turn.setTurn(&player1);
+    p_turn = &player1;
 }
 
 void Catan::setBoard(Board* myBoard) {
@@ -44,16 +44,13 @@ void Catan::printWinner() {
 }
 
 void Catan::rollDice(Player &player) {
-    if (turn.getTurn()->getName() != player.getName()) {
-        cout << "This is not your turn, it's " << turn.getTurn()->getName() << "'s turn!\n";
-    }
+    cout << p_turn->getName() << "'s turn:\n";
     // Create a random device to seed the random number generator
     std::random_device rd;
     // Initialize the random number generator with the seed
     std::mt19937 gen(rd());
     // Define a distribution that produces numbers between 1 and 6 (inclusive)
     std::uniform_int_distribution<> dis(1, 6);
-
     // Generate a random number between 1 and 6
     size_t dice = dis(gen);
     dice += dis(gen);
@@ -62,8 +59,16 @@ void Catan::rollDice(Player &player) {
 }
 
 void Catan::endTurn() {
-    ++turn;
-    cout << turn.getTurn()->getName() << "'s turn:\n";
+    if (p_turn == &player1) {
+        p_turn = &player2;
+    } else {
+        if (p_turn == &player2) {
+            p_turn = &player3;
+        }
+        else {
+            p_turn = &player1;
+        }
+    }
 }
 
 void Catan::distributeResources(size_t dice) {
@@ -78,3 +83,21 @@ void Catan::distributeResources(size_t dice) {
 
 }
 
+void Catan::buyRoad(Player &p, vector<string> places, vector<int> placesNum) {
+    // checking whether he has enough resources
+    p.useRoadResources();
+    p.placeRoad(places, placesNum, *board); // p1 continues to build a road.
+}
+
+void Catan::buySettlement(Player &p, vector<string> places, vector<int> placesNum) {
+    // checking whether he has enough resources
+    p.useSettlementResources();
+    p.placeSettelemnt(places, placesNum, *board); // p1 continues to build a road.
+}
+
+void Catan::buyCity(Player &p, vector<string> places, vector<int> placesNum) {
+    // checking whether he has enough resources
+    //p.useCityResources();
+    //p.placeSettelemnt(places, placesNum, *board); // p1 continues to build a road.
+    //p.buildCity()
+}
