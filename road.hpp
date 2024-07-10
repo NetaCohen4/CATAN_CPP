@@ -19,6 +19,9 @@ class Road {
 
     public:
         Road() {}
-        Road(Land* l1, Land* l2) {land1 = l1; land2 = l2;}
+        Road(Land* l1, Land* l2) {
+            land1 = l1; land2 = l2; 
+            cout << "new road was created\n";
+        }
 
 };

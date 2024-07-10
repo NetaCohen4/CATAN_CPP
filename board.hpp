@@ -20,13 +20,35 @@ class Board {
     public:
 
         Board() : landMatrix(5, std::vector<Land*>(5, nullptr)) {}
-        
 
+        Board(const Board& other) : landMatrix(5, std::vector<Land*>(5, nullptr)) {
+            for (size_t i = 0; i < 5; ++i) {
+                for (size_t j = 0; j < 5; ++j) {
+                    if (other.landMatrix[i][j]) {
+                        landMatrix[i][j] = new Land(*other.landMatrix[i][j]);
+                    }
+                }
+            }
+        }
+
+        
+    /*
         ~Board() {
             for (size_t i = 0; i < 5; ++i) {
                 for (size_t j = 0; j < 5; ++j) {
                     if (landMatrix[i][j]) {
                         delete landMatrix[i][j];
+                    }
+                }
+            }
+        }*/
+
+        ~Board() {
+            for (auto& row : landMatrix) {
+                for (auto& land : row) {
+                    if (land != nullptr) {  // Check if pointer is not nullptr before deleting
+                        delete land;
+                        land = nullptr;  // Set pointer to nullptr to avoid double free
                     }
                 }
             }
@@ -60,31 +82,50 @@ class Board {
         }
         
         void printBoard () {
+            cout << endl;
             for (size_t i = 0; i < 5; ++i) {
+                if (i != 2) {
+                    cout << "    ";
+                    if ((i != 1) && (i != 3)) {
+                        cout << "    ";
+                    }
+                }
                 for (size_t j = 0; j < 5; ++j) {
                     if (landMatrix[i][j]) {
                         landMatrix[i][j]->printLand();
-                        cout << ", ";
+                        cout << " | ";
                     }
                 }
-                std::cout << std::endl;
+                
+                cout << endl << endl;
             }
         }
 
-        Land* findLand(string landName, unsigned int landNum) {
-
+        Land* findLand(string landName, int landNum) { 
             for (size_t i = 0; i < 5; ++i) {
                 for (size_t j = 0; j < 5; ++j) {
+
                     if (landMatrix[i][j]) {
                         if (((landMatrix[i][j])->getLandType() == landName) && ((landMatrix[i][j])->getNum() == landNum)) {
                             return landMatrix[i][j];
                         }
-
                     }
                 }
             }
-
+            return nullptr;
         }
 
-
+        vector<Land*> findLandsByNum(size_t num) {
+            vector<Land*> lands;
+            for (size_t i = 0; i < 5; ++i) {
+                for (size_t j = 0; j < 5; ++j) {
+                    if (landMatrix[i][j]) {
+                        if ((landMatrix[i][j])->getNum() == num) {
+                            lands.push_back(landMatrix[i][j]);
+                        }
+                    }
+                }
+            }
+            return lands;
+        }
 };
