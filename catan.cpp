@@ -45,6 +45,9 @@ void Catan::printWinner() {
 
 void Catan::rollDice(Player &player) {
     cout << p_turn->getName() << "'s turn:\n";
+    if (p_turn->getName() != player.getName()) {
+        throw (player.getName() + " tried to roll the dice out of turn");
+    }
     // Create a random device to seed the random number generator
     std::random_device rd;
     // Initialize the random number generator with the seed
@@ -84,20 +87,39 @@ void Catan::distributeResources(size_t dice) {
 }
 
 void Catan::buyRoad(Player &p, vector<string> places, vector<int> placesNum) {
+    if (p_turn->getName() != p.getName()) {
+        throw (p.getName() + " tried to build out of turn");
+    }
     // checking whether he has enough resources
     p.useRoadResources();
     p.placeRoad(places, placesNum, *board); // p1 continues to build a road.
 }
 
 void Catan::buySettlement(Player &p, vector<string> places, vector<int> placesNum) {
+    if (p_turn->getName() != p.getName()) {
+        throw (p.getName() + " tried to build out of turn");
+    }
+    // Checking that the spot exists and available
     // checking whether he has enough resources
     p.useSettlementResources();
     p.placeSettelemnt(places, placesNum, *board); // p1 continues to build a road.
 }
 
 void Catan::buyCity(Player &p, vector<string> places, vector<int> placesNum) {
+    if (p_turn->getName() != p.getName()) {
+        throw (p.getName() + " tried to build out of turn");
+    }
+    // Checking that the spot exists and available
     // checking whether he has enough resources
-    //p.useCityResources();
-    //p.placeSettelemnt(places, placesNum, *board); // p1 continues to build a road.
+    p.useCityResources();
+    //p.buildCity(places, placesNum, *board); // p1 continues to build a road.
     //p.buildCity()
+}
+
+void Catan::buyDevelopmentCard(Player &p) {
+    if (p_turn->getName() != p.getName()) {
+        throw (p.getName() + " tried to build out of turn");
+    }
+    p.useDevelopmentCardResources();
+    p.buyDevelopmentCard();
 }

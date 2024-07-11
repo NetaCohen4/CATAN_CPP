@@ -15,7 +15,7 @@ class Road {
         
         //in case of a road by a single land - to know where exactly.
         // 1: left, 2: middle, 3: right (clockwise)
-        unsigned int location;
+        //unsigned int location;
 
     public:
         Road() {}

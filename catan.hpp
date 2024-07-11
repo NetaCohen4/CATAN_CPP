@@ -8,7 +8,7 @@
 
 #include "player.hpp"
 
-
+/*
 enum Card {
     wood,
     brick,
@@ -17,6 +17,7 @@ enum Card {
     wool,
     developmentCard
 };
+*/
 
 class Catan {
     private:
@@ -29,6 +30,9 @@ class Catan {
     public:
     Catan(){}
     Catan(Player &p1, Player &p2, Player &p3) {
+        if (p1.getName() == p2.getName() || p1.getName() == p3.getName() || p2.getName() == p3.getName() ) {
+            throw ("Catan Players's names must be different from one another");
+        }
         player1 = p1; player2 = p2; player3 = p3;
         p_turn = &p1;
     }
@@ -48,4 +52,5 @@ class Catan {
     void buyRoad(Player &p, vector<string> places, vector<int> placesNum);
     void buySettlement(Player &p, vector<string> places, vector<int> placesNum);
     void buyCity(Player &p, vector<string> places, vector<int> placesNum);
+    void buyDevelopmentCard(Player &p);
 };

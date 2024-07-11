@@ -15,6 +15,13 @@ using namespace std;
 
 
 void Player::placeSettelemnt(vector<string> places, vector<int> placesNum , Board &board) {
+    /*
+    for (size_t i = 0; (i < places.size()) && (i < placesNum.size()); ++i) {
+        p_land = settlements[i].getLandByNum(num);
+        if (p_land) {
+            addResource(p_land);
+        }
+    }*/
     Land* land1 = board.findLand(places[0], placesNum[0]);
     Land* land2 = board.findLand(places[1], placesNum[1]);
     Settlement newSettlement(land1, land2, nullptr);
@@ -88,7 +95,7 @@ void Player::addResourcesByNum(size_t num) {
 
 void Player::useRoadResources() {
     if (!wood || !bricks) {
-        throw ("You don't have the resources to buy Road.");
+        throw ("You don't have the resources to buy a Road.");
     }
     wood--;
     bricks--;
@@ -96,12 +103,29 @@ void Player::useRoadResources() {
 
 void Player::useSettlementResources() {
     if (!wood || !bricks || !wool || !wheat) {
-        throw ("You don't have the resources to buy Road.");
+        throw ("You don't have the resources to buy a Settlement.");
     }
     --wood;
     --bricks;
     --wool;
     --wheat;
+}
+
+void Player::useCityResources() {
+    if (wheat < 2 || ore < 3) {
+        throw ("You don't have the resources to buy a City.");
+    }
+    wheat -= 2;
+    ore -= 3;
+}
+
+void Player::useDevelopmentCardResources() {
+    if (!wheat || !wool || !ore) {
+        throw ("You don't have the resources to buy a Development Card.");
+    }
+    --wheat;
+    --wool;
+    --ore;
 }
 
 void Player::addResource(Land* p_land) {

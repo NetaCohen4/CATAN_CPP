@@ -16,14 +16,14 @@ class Settlement {
 
         // In case of a settlement by a single land, location says where exactly:
         // 1: left option, 2: right option (clockwise)
-        unsigned int location;
+        //unsigned int location;
 
     public:
         // Default constructor
-        Settlement() : land1(nullptr), land2(nullptr), land3(nullptr), location(0) {}
+        Settlement() : land1(nullptr), land2(nullptr), land3(nullptr){}
 
         // Constructor with initialization list
-        Settlement(Land* l1, Land* l2, Land* l3) : land1(l1), land2(l2), land3(l3), location(0) {
+        Settlement(Land* l1, Land* l2, Land* l3) : land1(l1), land2(l2), land3(l3){
             std::cout << "New settlement was created\n";
         }
 

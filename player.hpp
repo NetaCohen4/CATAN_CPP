@@ -11,6 +11,7 @@
 #include "board.hpp"
 #include "road.hpp"
 #include "settlement.hpp"
+#include "developmentCard.hpp"
 using namespace std;
 
 
@@ -33,6 +34,7 @@ class Player {
         vector<Settlement> settlements;
         vector<Settlement> cities;
 
+        std::vector<DevelopmentCard*> developmentCards;
 
     public:
         Player(){}
@@ -40,24 +42,26 @@ class Player {
 
         ~Player(){}
 
-        //void setCatan(Catan* myCatan) {catan = myCatan;}
         string getName() {return name;}
         int getPoints() {return points;}
+
+        void printPoints();
+        void printResources();
 
         void placeSettelemnt(vector<string> places, vector<int> placesNum , Board &board);
         void placeRoad(vector<string> places, vector<int> placesNum , Board &board);
         void buildCity(Settlement* settlement);
-
-        void trade(Player p2, string resource1, string resource2, int amount1, int amount2);
         void buyDevelopmentCard();
 
-        void printPoints();
+        void trade(Player p2, string resource1, string resource2, int amount1, int amount2);
 
         void addResources(vector<string> &places);
-        void printResources();
         void addResourcesByNum(size_t num);
+        void addResource(Land* p_land);
 
         void useRoadResources();
         void useSettlementResources();
-        void addResource(Land* p_land);
+        void useCityResources();
+        void useDevelopmentCardResources();
+        
 };

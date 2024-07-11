@@ -31,18 +31,6 @@ class Board {
             }
         }
 
-        
-    /*
-        ~Board() {
-            for (size_t i = 0; i < 5; ++i) {
-                for (size_t j = 0; j < 5; ++j) {
-                    if (landMatrix[i][j]) {
-                        delete landMatrix[i][j];
-                    }
-                }
-            }
-        }*/
-
         ~Board() {
             for (auto& row : landMatrix) {
                 for (auto& land : row) {
@@ -104,7 +92,6 @@ class Board {
         Land* findLand(string landName, int landNum) { 
             for (size_t i = 0; i < 5; ++i) {
                 for (size_t j = 0; j < 5; ++j) {
-
                     if (landMatrix[i][j]) {
                         if (((landMatrix[i][j])->getLandType() == landName) && ((landMatrix[i][j])->getNum() == landNum)) {
                             return landMatrix[i][j];

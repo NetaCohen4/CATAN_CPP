@@ -84,30 +84,36 @@ int main()
 
     catan.rollDice(p3); // Lets say it's print 3. Then, p3 gets wheat from the Agricultural Land and Ore from the Mountains, p1 gets wheat from the Agricultural Land.
     catan.endTurn();  // p3 ends his turn.
-/*
-    try
-    {
-        p2.rollDice(); // p2 tries to roll the dice again, but it's not his turn.
-    }
-    catch (const std::exception &e)
-    {
-        cout << e.what() << endl;
-    }
 
+    try {
+        catan.rollDice(p2); // p2 tries to roll the dice again, but it's not his turn.
+    }
+    catch (const string e) {
+        cout << e << endl;
+    }
     
-    
-    p1.rollDice();                       // Lets say it's print 6. Then, p1 gets bricks from the hills.
+    catan.rollDice(p1);                       // Lets say it's print 6. Then, p1 gets bricks from the hills.
     p1.trade(p2, "wood", "brick", 1, 1); // p1 trades 1 wood for 1 brick with p2.
-    p1.endTurn();                        // p1 ends his turn.
+    catan.endTurn();                        // p1 ends his turn.
 
-    p2.rollDice();           // Lets say it's print 9. Then, p3 gets wool from the Pasture Land, p2 gets wool from the Pasture Land.
-    p2.buyDevelopmentCard(); // p2 buys a development card. Lets say it is a bonus points card.
-    p2.endTurn();            // p2 ends his turn.
+    catan.rollDice(p2);           // Lets say it's print 9. Then, p3 gets wool from the Pasture Land, p2 gets wool from the Pasture Land.
+    // p2 buys a development card. Lets say it is a bonus points card.
+    try {
+        catan.buyDevelopmentCard(p2); 
+    }
+    catch (const char* e) {
+        cout << e << endl;
+    }
+    catan.endTurn();            // p2 ends his turn.
+
+    p1.printResources();
+    p2.printResources();
+    p3.printResources();
 
     p1.printPoints(); // p1 has 2 points because it has two settelments.
     p2.printPoints(); // p2 has 3 points because it has two settelments and a bonus points card.
     p3.printPoints(); // p3 has 2 points because it has two settelments.
 
     catan.printWinner(); // Should print None because no player reached 10 points.
-    */
+    
 }
