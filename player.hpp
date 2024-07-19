@@ -21,7 +21,6 @@ class Player {
 
     private:
         string name;
-        vector<string> cards;
         int points = 0;
         
         size_t wool = 0;
@@ -34,7 +33,7 @@ class Player {
         vector<Settlement> settlements;
         vector<Settlement> cities;
 
-        std::vector<DevelopmentCard*> developmentCards;
+        //std::vector<DevelopmentCard*> developmentCards;
 
     public:
         Player(){}
@@ -53,7 +52,7 @@ class Player {
         void buildCity(Settlement* settlement);
         void buyDevelopmentCard();
 
-        void trade(Player p2, string resource1, string resource2, int amount1, int amount2);
+        void trade(Player &p2, string resource1, string resource2, int amount1, int amount2);
 
         void addResources(vector<string> &places);
         void addResourcesByNum(size_t num);
@@ -63,5 +62,20 @@ class Player {
         void useSettlementResources();
         void useCityResources();
         void useDevelopmentCardResources();
+
+        bool hasRoad(int node1, int node2);
+        bool hasRoad(int node);
+        bool hasSettlementOrCity(int node);
+
+        void placeSettelemnt(int node, Board &board);
+        void placeRoad(int node1, int node2);
+        void buildCity(int node);
+
+        void addPoints(int num);
+        //void canPlaceRoad(int node1, int node2);
+
+        //void canPlaceSettlement(int node);
+
+        //vector<int> neighborsOfNode(int node);
         
 };

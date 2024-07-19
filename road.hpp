@@ -13,9 +13,8 @@ class Road {
         Land* land1;
         Land* land2;
         
-        //in case of a road by a single land - to know where exactly.
-        // 1: left, 2: middle, 3: right (clockwise)
-        //unsigned int location;
+        int node_code1; // Always the apper one
+        int node_code2; // The lower one
 
     public:
         Road() {}
@@ -23,5 +22,9 @@ class Road {
             land1 = l1; land2 = l2; 
             cout << "new road was created\n";
         }
+        Road(int node1, int node2) : node_code1(node1), node_code2(node2) {}
+
+        int getNode1() {return node_code1;}
+        int getNode2() {return node_code2;}
 
 };

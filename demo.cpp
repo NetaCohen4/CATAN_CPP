@@ -25,6 +25,7 @@ int main()
 
     vector<string> places = {"Mountains", "Pasture Land"};
     vector<int> placesNum = {10, 2};
+    //p1.placeSettlement(0);
     p1.placeSettelemnt(places, placesNum, board);
     p1.placeRoad(places, placesNum, board);
     

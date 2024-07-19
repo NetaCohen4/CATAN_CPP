@@ -3,84 +3,179 @@
     325195774
     netaco432@gmail.com
 */
-#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include "doctest.h"
-#include "../board.hpp"
 #include "../player.hpp"
-#include <string>
+#include "../board.hpp"
 
-using namespace std;
+TEST_CASE("Trade resources between players") {
+    Player p1("Alice");
+    Player p2("Bob");
 
-TEST_CASE("Test new Player") {
-    
-    Player newPlayer("player");
-    
-    CHECK(newPlayer.getName() == "player");
+    // Setup initial resources
+    vector<string> resources = {"Forest", "Hills", "Mountains", "Agricultural Land", "Pasture Land"};
+    p1.addResources(resources);
+    p2.addResources(resources);
 
-    CHECK(newPlayer.getPoints() == 0);
+    p1.trade(p2, "wood", "bricks", 1, 1);
 
-    Board board;
-    
-    board.createBestBoard();
+    // After trade, p1 should have one less wood and one more brick
+    // p2 should have one more wood and one less brick
+    // We need to implement getResources for test verification
 
-
-    vector<string> places = {"Mountains", "Pasture Land", "Agricultural Land"};
-    vector<int> placesNum =  {10, 2, 12};
-    newPlayer.placeSettelemnt(places, placesNum, board);
-    
-    newPlayer.addResourcesByNum(10);
-    newPlayer.addResourcesByNum(2);
-    newPlayer.addResourcesByNum(12);
-    newPlayer.printResources();
-
-    CHECK(newPlayer.getPoints() == 0);
-  
-    //CHECK(newPlayer.getPoints() == 1);
+    // Print resources for visual verification
+    p1.printResources();
+    p2.printResources();
 }
 
-TEST_CASE("Player Initialization") {
-    Player p1("Alice");
-    CHECK(p1.getName() == "Alice");
+TEST_CASE("Buy Development Card") {
+    Player p1("Charlie");
+
+    // Setup initial resources to buy a development card
+    vector<string> resources = {"Forest", "Hills", "Mountains", "Agricultural Land", "Pasture Land"};
+    p1.addResources(resources);
+    p1.addResources(resources); // Ensure sufficient resources
+
+    p1.buyDevelopmentCard();
+
+    // Print resources for visual verification
+    p1.printResources();
+}
+
+TEST_CASE("Print points") {
+    Player p1("David");
+    p1.printPoints();
+
+    // Check if initial points are 0
     CHECK(p1.getPoints() == 0);
-
-    Player p2;
-    CHECK(p2.getName() == "");
-    CHECK(p2.getPoints() == 0);
 }
 
-TEST_CASE("Player Points") {
-    Player p1("Alice");
-    p1.printPoints();  // Should print: Alice: 0 points
-    CHECK(p1.getPoints() == 0);
+TEST_CASE("Add resources") {
+    Player p1("Eve");
+    vector<string> resources = {"Forest", "Hills", "Mountains", "Agricultural Land", "Pasture Land"};
+    p1.addResources(resources);
 
-    // Simulate earning points
-    p1.placeSettelemnt({"Forest", "Hills"}, {3, 5}, Board());
-    CHECK(p1.getPoints() == 1);
-    p1.printPoints();  // Should print: Alice: 1 points
+    // Print resources for visual verification
+    p1.printResources();
+
+    // We need to implement getResources for test verification
 }
 
-TEST_CASE("Player Resources") {
-    Player p1("Alice");
-    std::vector<std::string> places = {"Forest", "Hills", "Mountains"};
-    p1.addResources(places);
-
-    p1.printResources();  // Should print: Alice has: 0 wool, 0 weat, 1 ore, 1 bricks, 1 wood.
-    CHECK(p1.getResources("wood") == 1);
-    CHECK(p1.getResources("bricks") == 1);
-    CHECK(p1.getResources("ore") == 1);
-}
-
-TEST_CASE("Player Place Settlement and Road") {
+TEST_CASE("Add resources by number") {
+    Player p1("Frank");
     Board board;
-    board.createBestBoard();
-    
-    Player p1("Alice");
+    vector<string> places = {"Forest", "Hills"};
+    vector<int> placesNum = {1, 2};
 
-    p1.placeSettelemnt({"Forest", "Hills"}, {3, 5}, board);
-    CHECK(p1.getPoints() == 1);
+    p1.placeSettelemnt(places, placesNum, board);
+    p1.addResourcesByNum(1);
 
-    p1.placeRoad({"Forest", "Hills"}, {3, 5}, board);
-    CHECK(p1.getPoints() == 1);  // Placing a road doesn't add points
+    // Print resources for visual verification
+    p1.printResources();
+}
+
+TEST_CASE("Use resources for road") {
+    Player p1("Grace");
+    vector<string> resources = {"Forest", "Hills"};
+    p1.addResources(resources);
+    p1.addResources(resources); // Ensure sufficient resources
+
+    p1.useRoadResources();
+
+    // Print resources for visual verification
+    p1.printResources();
+}
+
+TEST_CASE("Use resources for settlement") {
+    Player p1("Hank");
+    vector<string> resources = {"Forest", "Hills", "Pasture Land", "Agricultural Land"};
+    p1.addResources(resources);
+    p1.addResources(resources); // Ensure sufficient resources
+    p1.printResources();
+
+    p1.useSettlementResources();
+
+    // Print resources for visual verification
+    p1.printResources();
+}
+
+TEST_CASE("Use resources for city") {
+    Player p1("Ivy");
+    vector<string> resources = {"Mountains", "Mountains", "Mountains", "Agricultural Land", "Agricultural Land"};
+    p1.addResources(resources);
+    p1.addResources(resources); // Ensure sufficient resources
+
+    p1.useCityResources();
+
+    // Print resources for visual verification
+    p1.printResources();
+}
+
+TEST_CASE("Use resources for development card") {
+    Player p1("Jack");
+    vector<string> resources = {"Forest", "Hills", "Mountains", "Agricultural Land", "Pasture Land"};
+    p1.addResources(resources);
+    p1.addResources(resources); // Ensure sufficient resources
+
+    p1.useDevelopmentCardResources();
+
+    // Print resources for visual verification
+    p1.printResources();
+}
+
+TEST_CASE("Place road between nodes") {
+    Player p1("Kurt");
+    Board board;
+    p1.placeSettelemnt(8, board);
+    CHECK(p1.hasSettlementOrCity(8) == true);
+    p1.placeRoad(8, 12);
+
+    // Check road placement
+    CHECK(p1.hasRoad(8, 12) == true);
+}
+
+TEST_CASE("Place settlement at a node") {
+    Player p1("Leo");
+    Board board;
+    p1.placeSettelemnt(1, board);
+
+    // Check settlement placement
+    CHECK(p1.hasSettlementOrCity(1) == true);
+}
+
+TEST_CASE("Build city at a settlement node") {
+    Player p1("Mona");
+    Board board;
+    p1.placeSettelemnt(1, board);
+    p1.buildCity(1);
+
+    // Check if the settlement has been converted to a city
+    // We need to implement hasCity for test verification
 }
 
 
+TEST_CASE("Testing resource usage methods for throwing exceptions") {
+    Board board;
+    Player player("TestPlayer");
+
+    // Trying to use resources for building without having them
+    CHECK_THROWS_WITH(player.useRoadResources(), "You don't have the resources to buy a Road.");
+    CHECK_THROWS_WITH(player.useSettlementResources(), "You don't have the resources to buy a Settlement.");
+    CHECK_THROWS_WITH(player.useCityResources(), "You don't have the resources to buy a City.");
+    CHECK_THROWS_WITH(player.useDevelopmentCardResources(), "You don't have the resources to buy a Development Card.");
+}
+
+TEST_CASE("Testing placeRoad for throwing exceptions") {
+    Board board;
+    Player player("TestPlayer");
+
+    // Trying to place a road without connecting it to a settlement or another road
+    CHECK_THROWS_WITH(player.placeRoad(1, 2), "Error: A Road must be settled by a settlement or by another road.");
+}
+
+TEST_CASE("Testing buildCity for throwing exceptions") {
+    Board board;
+    Player player("TestPlayer");
+
+    // Trying to build a city without an existing settlement
+    CHECK_THROWS_WITH(player.buildCity(1), "There must be a settlement in order to build a city.");
+}
