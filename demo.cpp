@@ -23,59 +23,42 @@ int main()
     catan.setBoard(&board); // get the board of the game.
     board.printBoard();
 
-    vector<string> places = {"Mountains", "Pasture Land"};
-    vector<int> placesNum = {10, 2};
-    //p1.placeSettlement(0);
-    p1.placeSettelemnt(places, placesNum, board);
-    p1.placeRoad(places, placesNum, board);
-    
-    places = {"Agricultural Land", "Desert"};
-    placesNum = {3, 4};
-    p1.placeSettelemnt(places, placesNum, board);
-    p1.placeRoad(places, placesNum, board); // p1 chooses Forest, hills, Agricultural Land, Desert with numbers 5, 6, 3, 4.
-    p1.addResources(places);
+    catan.placeFirstSettlement(p1, 12);
+    catan.placeFirstRoad(p1, 12, 17);
+    catan.addResources(p1, 12);
 
-    places = {"Mountains", "Pasture Land"};
-    placesNum = {4, 9};
-    p2.placeSettelemnt(places, placesNum, board);
-    p2.placeRoad(places, placesNum, board);
+    catan.placeFirstSettlement(p2, 9);
+    catan.placeFirstRoad(p2, 9, 13);
+    catan.addResources(p2, 9);
+
     try
     {
-        p3.placeSettelemnt(places, placesNum, board); // p3 tries to place a settlement in the same location as p2.
+        catan.placeFirstSettlement(p3, 12); // p3 tries to place a settlement in the same location as p2.
     }
-    catch (const std::exception &e)
+    catch (const string e)
     {
-        cout << e.what() << endl;
+        cout << e << endl;
     }
-    
-    places = {"Forest", "Pasture Land"};
-    placesNum = {5, 9};
-    p2.placeSettelemnt(places, placesNum, board);
-    p2.placeRoad(places, placesNum, board); // p2 chooses Mountains, Pasture Land, and Forest with numbers 4, 9, 5.
-    p2.addResources(places);
-
-    places = {"Mountains", "Pasture Land"};
-    placesNum = {3, 8};
-    p3.placeSettelemnt(places, placesNum, board);
-    p3.placeRoad(places, placesNum, board);
-
-    places = {"Agricultural Land", "Pasture Land"};
-    placesNum = {3, 9};
-    p3.placeSettelemnt(places, placesNum, board);
-    p3.placeRoad(places, placesNum, board); // p3 chooses Mountains, Pasture Land, Agricultural Land, Pasture Land with numbers 3, 8, 3, 9.
-    p3.addResources(places);
-
+    try {
+        catan.placeFirstSettlement(p3, 7);
+    }
+    catch (const string e)
+    {
+        cout << e << endl;
+    }
     cout << endl;
+    
     p1.printResources();
     p2.printResources();
     p3.printResources();
+
     cout << "\nGame starts!\n\n";
     // p1 has wood, bricks, and wheat, p2 has wood, ore, and wool, p3 has ore, wool, wheat.
     catan.rollDice(p1);   // Lets say it's print 4. Then, p2 gets ore from the mountations.
     try {
-        catan.buyRoad(p1, {"Forest", "Hills"}, {5, 6});
+        catan.buyRoad(p1, 23, 29);
     }
-    catch (const char* e) {
+    catch (const string e) {
         cout << e << endl;
     }
     catan.endTurn();                                // p1 ends his turn.
@@ -102,7 +85,7 @@ int main()
     try {
         catan.buyDevelopmentCard(p2); 
     }
-    catch (const char* e) {
+    catch (const string e) {
         cout << e << endl;
     }
     catan.endTurn();            // p2 ends his turn.

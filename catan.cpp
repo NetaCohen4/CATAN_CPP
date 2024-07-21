@@ -81,9 +81,9 @@ void Catan::distributeResources(size_t dice) {
         
     }
     else {
-        vector<Land*> lands = board->findLandsByNum(dice);
-        //player1.addResources()
         player1.addResourcesByNum(dice);
+        player2.addResourcesByNum(dice);
+        player3.addResourcesByNum(dice);
     }
 
 }
@@ -158,11 +158,37 @@ void Catan::buyRoad(Player &p, int node1, int node2) {
     isItHisTurn(p);
     board->isRoadLegal(node1, node2);
     isRoadAvailable(node1, node2);
+    //if (!p.hasSettlementOrCity(node1) && !p.hasSettlementOrCity(node2) && !p.hasRoad(node1) && !p.hasRoad(node2)) {
+    //    throw ("Error: A Road must be settled by a settlement or by another road.");
+    //}
+    p.useRoadResources();
     p.placeRoad(node1, node2);
 }
 
 void Catan::isRoadAvailable(int node1, int node2) {
     if (player1.hasRoad(node1, node2) || player2.hasRoad(node1, node2) || player3.hasRoad(node1, node2)) {
         throw ((string)"Error: Attempt of building a road in an unavailable place");
+    }
+}
+
+void Catan::placeFirstSettlement(Player &p, int node) {
+    // Checking that the spot exists and available
+    isNodeAvailable(node);
+    p.placeSettelemnt(node, *board);
+}
+
+void Catan::placeFirstRoad(Player &p, int node1, int node2) {
+    board->isRoadLegal(node1, node2);
+    isRoadAvailable(node1, node2);
+    if (!p.hasSettlementOrCity(node1) && !p.hasSettlementOrCity(node2) && !p.hasRoad(node1) && !p.hasRoad(node2)) {
+        throw ((string)"Error: A Road must be settled by a settlement or by another road.");
+    }
+    p.placeRoad(node1, node2);
+}
+
+void Catan::addResources(Player &p, int node) {
+    vector<Land*> lands = board->getLandsByNodeCode(node);
+    for (Land* land : lands) {
+        p.addResource(land);
     }
 }

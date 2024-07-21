@@ -17,7 +17,7 @@ class Land {
 
     private:
         LandType type;
-        size_t num;
+        int num;
 
     public:
 

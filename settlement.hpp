@@ -11,28 +11,40 @@
 class Settlement {
     private:
         vector<Land*> lands;
-        int node_code;
+        int node_code = -1;
         bool city = false;
 
         // To be deleted:
-        Land* land1;
-        Land* land2;
-        Land* land3;
+        //Land* land1;
+        //Land* land2;
+        //Land* land3;
 
 
     public:
-        // Default constructor
-        Settlement() : land1(nullptr), land2(nullptr), land3(nullptr){}
-
+        Settlement() {}
         Settlement(int node) : node_code(node) {}
-
+/*
         // Constructor with initialization list
         Settlement(Land* l1, Land* l2, Land* l3) : land1(l1), land2(l2), land3(l3){
             std::cout << "New settlement was created\n";
         }
-
+*/
         bool operator==(const Settlement& other) const {
-            return ((land1 == other.land1) && (land2 == other.land2) && (land3 == other.land3));
+            // Compare node_code and city first
+            if (node_code != other.node_code || city != other.city) {
+                return false;
+            }
+            // Compare the size of the lands vectors
+            if (lands.size() != other.lands.size()) {
+                return false;
+            }
+            // Compare each element in the lands vectors
+            for (size_t i = 0; i < lands.size(); ++i) {
+                if (lands[i] != other.lands[i]) {
+                    return false;
+                }
+            }
+            return true;
         }
 
         int getNode() {return node_code;}
@@ -47,22 +59,16 @@ class Settlement {
             city = true;
         }
 
-        Land* getLandByNum(size_t num) {
-            if (land1) {
-                if (land1->getNum() == num) {
-                    return land1;
+        vector<Land*> getLandsByNum(int num) {
+            vector<Land*> relevant_lands;
+            for (Land* land : lands) {
+                if (land->getNum() == num) {
+                    relevant_lands.push_back(land);
+                    if (city) {
+                        relevant_lands.push_back(land);
+                    }
                 }
             }
-            if (land2) {
-                if (land1->getNum() == num) {
-                    return land2;
-                }
-            }
-            if (land1) {
-                if (land3->getNum() == num) {
-                    return land3;
-                }
-            }
-            return nullptr;
+            return relevant_lands;
         }
 };

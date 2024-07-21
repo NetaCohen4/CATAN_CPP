@@ -116,112 +116,7 @@ class Board {
             return lands;
         }
 
-        vector<Land*> getLandsByNodeCode(size_t nodeCode) {
-            vector<Land*> lands(3, nullptr);
-            // Switch statement to set lands based on nodeCode
-            switch (nodeCode) {
-                case 0:
-                case 3:
-                    lands[0] = landMatrix[0][0];
-                    break;
-                case 1:
-                    lands[0] = landMatrix[0][1];
-                    break;
-                case 2:
-                case 6:
-                    lands[0] = landMatrix[0][2];
-                    break;
-                case 4:
-                    lands[0] = landMatrix[0][0];
-                    lands[1] = landMatrix[0][1];
-                    break;
-                case 5:
-                    lands[0] = landMatrix[0][1];
-                    lands[1] = landMatrix[0][2];
-                    break;
-                case 7:
-                    lands[0] = landMatrix[0][0];
-                    lands[1] = landMatrix[1][0];
-                    break;
-                case 8:
-                    lands[0] = landMatrix[0][0];
-                    lands[1] = landMatrix[0][1];
-                    lands[2] = landMatrix[1][1];
-                    break;
-                case 9:
-                    lands[0] = landMatrix[0][1];
-                    lands[1] = landMatrix[0][2];
-                    lands[2] = landMatrix[1][2];
-                    break;
-                case 10:
-                    lands[0] = landMatrix[0][2];
-                    lands[1] = landMatrix[1][3];
-                    break;
-                case 11:
-                    lands[0] = landMatrix[1][0];
-                    break;
-                case 12:
-                    lands[0] = landMatrix[0][0];
-                    lands[1] = landMatrix[1][0];
-                    lands[2] = landMatrix[1][1];
-                    break;
-                case 13:
-                    lands[0] = landMatrix[0][1];
-                    lands[1] = landMatrix[1][1];
-                    lands[2] = landMatrix[1][2];
-                    break;
-                case 14:
-                    lands[0] = landMatrix[0][2];
-                    lands[1] = landMatrix[1][2];
-                    lands[2] = landMatrix[1][3];
-                    break;
-                case 15:
-                    lands[0] = landMatrix[1][3];
-                    break;
-                case 16:
-                    lands[0] = landMatrix[1][0];
-                    lands[1] = landMatrix[2][0];
-                    break;
-                case 17:
-                    lands[0] = landMatrix[1][0];
-                    lands[1] = landMatrix[1][1];
-                    lands[2] = landMatrix[2][1];
-                    break;
-                case 18:
-                    lands[0] = landMatrix[1][1];
-                    lands[1] = landMatrix[2][1];
-                    lands[2] = landMatrix[2][2];
-                    break;
-                case 19:
-                    lands[0] = landMatrix[1][2];
-                    lands[1] = landMatrix[1][3];
-                    lands[2] = landMatrix[2][3];
-                    break;
-                case 20:
-                    lands[0] = landMatrix[1][3];
-                    lands[1] = landMatrix[2][4];
-                    break;
-                case 21:
-                case 27:
-                    lands[0] = landMatrix[2][0];
-                    break;
-
-                
-                case 26:
-                case 32:
-                    lands[0] = landMatrix[2][4];
-                    break;
-
-
-
-                default:
-                    // If nodeCode doesn't match any case, leave lands as nullptr
-                    break;
-            }
-            return lands;
-
-        }
-
+        
         void isRoadLegal(int node1, int node2) { // node1 < node2
             bool flag = false;
             switch (node1) {
@@ -292,10 +187,11 @@ class Board {
             }
         }
         
-        
+        vector<Land*> getLandsByNodeCode(size_t nodeCode);
         
 
 };
 
 
 vector<int> nodeNeighbors(int node);
+

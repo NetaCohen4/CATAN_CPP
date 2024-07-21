@@ -72,6 +72,7 @@ class Player {
         void buildCity(int node);
 
         void addPoints(int num);
+
         //void canPlaceRoad(int node1, int node2);
 
         //void canPlaceSettlement(int node);

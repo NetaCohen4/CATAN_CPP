@@ -70,4 +70,9 @@ class Catan {
     void isNodeAvailable(int node);
 
     void isItHisTurn(Player &player);
+
+    void placeFirstSettlement(Player &p, int node);
+    void placeFirstRoad(Player &p, int node1, int node2);
+
+    void addResources(Player &p, int node);
 };

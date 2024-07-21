@@ -17,7 +17,7 @@ using namespace std;
 void Player::placeSettelemnt(vector<string> places, vector<int> placesNum , Board &board) {
     Land* land1 = board.findLand(places[0], placesNum[0]);
     Land* land2 = board.findLand(places[1], placesNum[1]);
-    Settlement newSettlement(land1, land2, nullptr);
+    Settlement newSettlement;
     settlements.push_back(newSettlement);
     this->points++;
 }
@@ -66,31 +66,27 @@ void Player::addResources(vector<string> &places) {
     }
 }
 
+
 void Player::printResources() {
     cout << name << " has: " << wool << " wool, " << wheat << " weat, " << ore << " ore, "
      << bricks << " bricks, " << wood << " wood.\n";
 }
 
 void Player::addResourcesByNum(size_t num) {
-    Land* p_land;
-    for (size_t i = 0; i < settlements.size(); ++i) {
-        p_land = settlements[i].getLandByNum(num);
-        if (p_land) {
-            addResource(p_land);
-        }
+    vector<Land*> relevant_lands;
+    vector<Land*> all_relevant_lands;
+    for (Settlement& settlement : settlements) {
+        relevant_lands = settlement.getLandsByNum(num);
+        all_relevant_lands.insert(all_relevant_lands.end(), relevant_lands.begin(), relevant_lands.end());
     }
-    for (size_t i = 0; i < cities.size(); ++i) {
-        p_land = cities[i].getLandByNum(num);
-        if (p_land) {
-            addResource(p_land);
-            addResource(p_land);
-        }
+    for (Land* land : all_relevant_lands) {
+        addResource(land);
     }
 }
 
 void Player::useRoadResources() {
     if (!wood || !bricks) {
-        throw ("You don't have the resources to buy a Road.");
+        throw ((string)"You don't have the resources to buy a Road.");
     }
     wood--;
     bricks--;
@@ -116,7 +112,7 @@ void Player::useCityResources() {
 
 void Player::useDevelopmentCardResources() {
     if (!wheat || !wool || !ore) {
-        throw ("You don't have the resources to buy a Development Card.");
+        throw ((string)"You don't have the resources to buy a Development Card.");
     }
     --wheat;
     --wool;
@@ -134,10 +130,6 @@ void Player::addResource(Land* p_land) {
 
 
 void Player::placeRoad(int node1, int node2) {
-    if (!hasSettlementOrCity(node1) && !hasSettlementOrCity(node2) && !hasRoad(node1) && !hasRoad(node2)) {
-        throw ("Error: A Road must be settled by a settlement or by another road.");
-    }
-    useRoadResources();
     Road newRoad(node1, node2);
     roads.push_back(newRoad);
 }
@@ -147,6 +139,7 @@ void Player::placeSettelemnt(int node, Board &board) {
     vector<Land*> myLands = board.getLandsByNodeCode(node);
     newSettlement.setLands(myLands);
     settlements.push_back(newSettlement);
+    points++;
 }
 
 void Player::buildCity(int node) {
@@ -154,6 +147,7 @@ void Player::buildCity(int node) {
         if (settlement.getNode() == node) {
             useCityResources();
             settlement.makeCity();
+            points++;
             return;
         }
     }
