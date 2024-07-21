@@ -14,32 +14,53 @@ using namespace std;
 
 
 
-void Player::placeSettelemnt(vector<string> places, vector<int> placesNum , Board &board) {
-    Land* land1 = board.findLand(places[0], placesNum[0]);
-    Land* land2 = board.findLand(places[1], placesNum[1]);
-    Settlement newSettlement;
-    settlements.push_back(newSettlement);
-    this->points++;
-}
-
-
-void Player::placeRoad(vector<string> places, vector<int> placesNum , Board &board) {
-    Land* land1 = board.findLand(places[0], placesNum[0]);
-    Land* land2 = board.findLand(places[1], placesNum[1]);
+void Player::trade(Player &p2, string resource1, string resource2, unsigned int amount1, unsigned int amount2) {
     
-    Road newRoad(land1, land2);
-    roads.push_back(newRoad);
+    // Make sure they have enough of the resources
+    if (!hasResource(resource1, amount1) || !p2.hasResource(resource2, amount2)) {
+        throw ((string)"Error: Trade cannot be performed, players do not have the required resources.");
+    }
+    // Make the trade
+    this->changeAmountOfResource(resource1, -amount1);
+    this->changeAmountOfResource(resource2, amount2);
+    p2.changeAmountOfResource(resource1, amount1);
+    p2.changeAmountOfResource(resource2, -amount2);
+    
 }
 
-
-void Player::buildCity(Settlement* settlement) {
-    this->cities.push_back(*settlement);
-    settlements.erase(std::remove(settlements.begin(), settlements.end(), *settlement), settlements.end());
-    this->points++;
+bool Player::hasResource(string resource, unsigned int amount) {
+    if (resource == "ore") {
+        return (ore >= amount);
+    } else if (resource == "wheat") {
+        return (wheat >= amount);
+    } else if (resource == "wool") {
+        return (wool >= amount);
+    } else if (resource == "wood") {
+        return (wood >= amount);
+    } else if (resource == "bricks") {
+        return (bricks >= amount);
+    }
+    throw ("Error: There is no such resource as " + resource);
 }
 
-void Player::trade(Player &p2, string resource1, string resource2, int amount1, int amount2) {
-
+void Player::changeAmountOfResource(string resource, int amount) {
+    if (resource == "ore") {
+        ore += amount;
+        return;
+    } else if (resource == "wheat") {
+        wheat += amount;
+        return;
+    } else if (resource == "wool") {
+        wool += amount;
+        return;
+    } else if (resource == "wood") {
+        wood += amount;
+        return;
+    } else if (resource == "bricks") {
+        bricks += amount;
+        return;
+    }
+    throw ("Error: There is no such resource as " + resource);
 }
 
 void Player::buyDevelopmentCard() {
@@ -65,7 +86,6 @@ void Player::addResources(vector<string> &places) {
         }
     }
 }
-
 
 void Player::printResources() {
     cout << name << " has: " << wool << " wool, " << wheat << " weat, " << ore << " ore, "
@@ -94,7 +114,7 @@ void Player::useRoadResources() {
 
 void Player::useSettlementResources() {
     if (!wood || !bricks || !wool || !wheat) {
-        throw ("You don't have the resources to buy a Settlement.");
+        throw ((string)"You don't have the resources to buy a Settlement.");
     }
     --wood;
     --bricks;
@@ -104,7 +124,7 @@ void Player::useSettlementResources() {
 
 void Player::useCityResources() {
     if (wheat < 2 || ore < 3) {
-        throw ("You don't have the resources to buy a City.");
+        throw ((string)"You don't have the resources to buy a City.");
     }
     wheat -= 2;
     ore -= 3;
@@ -128,7 +148,6 @@ void Player::addResource(Land* p_land) {
     if (land_name == "Pasture Land") ++wool;
 }
 
-
 void Player::placeRoad(int node1, int node2) {
     Road newRoad(node1, node2);
     roads.push_back(newRoad);
@@ -151,7 +170,7 @@ void Player::buildCity(int node) {
             return;
         }
     }
-    throw ("There must be a settlement in order to build a city.");
+    throw ((string)"There must be a settlement in order to build a city.");
 }
 
 bool Player::hasRoad(int node1, int node2) {
@@ -187,41 +206,3 @@ bool Player::hasSettlementOrCity(int node) {
 void Player::addPoints(int num) {
     points += num;
 }
-/*
-void Player::canPlaceRoad(int node1, int node2) {
-
-    if (!hasSettlementOrCity(node1) && !hasSettlementOrCity(node2) && !hasRoad(node1) && !hasRoad(node2)) {
-        throw ("Error: A Road must be settled by a settlement or by another road.");
-    }
-    
-}
-
-void Player::canPlaceSettlement(int node) {
-    vector<int> neighbors = neighborsOfNode(node);
-    for (int neighbor : neighbors) {
-        for (Road& road : roads) {
-            if (road.getNode1() == neighbor && road.getNode2() != node) {
-                return;
-            }
-            if (road.getNode2() == neighbor && road.getNode1() != node) {
-                return;
-            }
-        }
-    }
-    throw ("Error: A Settlement must be settled by a settlement or by another road.");
-}
-
-
-vector<int> Player::neighborsOfNode(int node) {
-    vector<int> neighbors;
-    for (Road& road : roads) {
-        if (road.getNode1() == node) {
-            neighbors.push_back(road.getNode2());
-        }
-        if (road.getNode2() == node) {
-            neighbors.push_back(road.getNode1());
-        }
-    }
-    return neighbors;
-}
-*/

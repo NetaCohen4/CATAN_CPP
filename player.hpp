@@ -31,7 +31,6 @@ class Player {
 
         vector<Road> roads;
         vector<Settlement> settlements;
-        vector<Settlement> cities;
 
         //std::vector<DevelopmentCard*> developmentCards;
 
@@ -47,12 +46,11 @@ class Player {
         void printPoints();
         void printResources();
 
-        void placeSettelemnt(vector<string> places, vector<int> placesNum , Board &board);
-        void placeRoad(vector<string> places, vector<int> placesNum , Board &board);
-        void buildCity(Settlement* settlement);
         void buyDevelopmentCard();
 
-        void trade(Player &p2, string resource1, string resource2, int amount1, int amount2);
+        void trade(Player &p2, string resource1, string resource2, unsigned int amount1, unsigned int amount2);
+        bool hasResource(string resource, unsigned int amount);
+        void changeAmountOfResource(string resource, int amount);
 
         void addResources(vector<string> &places);
         void addResourcesByNum(size_t num);

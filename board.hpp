@@ -89,7 +89,7 @@ class Board {
             }
         }
 
-        Land* findLand(string landName, size_t landNum) { 
+        Land* findLand(string landName, int landNum) { 
             for (size_t i = 0; i < 5; ++i) {
                 for (size_t j = 0; j < 5; ++j) {
                     if (landMatrix[i][j]) {
@@ -102,7 +102,7 @@ class Board {
             return nullptr;
         }
 
-        vector<Land*> findLandsByNum(size_t num) {
+        vector<Land*> findLandsByNum(int num) {
             vector<Land*> lands;
             for (size_t i = 0; i < 5; ++i) {
                 for (size_t j = 0; j < 5; ++j) {

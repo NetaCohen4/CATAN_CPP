@@ -88,31 +88,6 @@ void Catan::distributeResources(size_t dice) {
 
 }
 
-void Catan::buyRoad(Player &p, vector<string> places, vector<int> placesNum) {
-    isItHisTurn(p);
-    // checking whether he has enough resources
-    p.useRoadResources();
-    p.placeRoad(places, placesNum, *board); // p1 continues to build a road.
-}
-
-
-void Catan::buySettlement(Player &p, vector<string> places, vector<int> placesNum) {
-    isItHisTurn(p);
-    // Checking that the spot exists and available
-    // checking whether he has enough resources
-    p.useSettlementResources();
-    p.placeSettelemnt(places, placesNum, *board); // p1 continues to build a road.
-}
-
-void Catan::buyCity(Player &p, vector<string> places, vector<int> placesNum) {
-    isItHisTurn(p);
-    // Checking that the spot exists and available
-    // checking whether he has enough resources
-    p.useCityResources();
-    //p.buildCity(places, placesNum, *board); // p1 continues to build a road.
-    //p.buildCity()
-}
-
 void Catan::buyDevelopmentCard(Player &p) {
     isItHisTurn(p);
     p.useDevelopmentCardResources();
@@ -191,4 +166,9 @@ void Catan::addResources(Player &p, int node) {
     for (Land* land : lands) {
         p.addResource(land);
     }
+}
+
+void Catan::trade(Player &p1, Player &p2, string resource1, string resource2, unsigned int amount1, unsigned int amount2) {
+    isItHisTurn(p1);
+    p1.trade(p2, resource1, resource2, amount1, amount2);
 }

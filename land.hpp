@@ -29,6 +29,6 @@ class Land {
         }
 
         string getLandType() {return landTypeToString(type);}
-        size_t getNum() {return num;}
+        int getNum() {return num;}
         void printLand() {cout << landTypeToString(type) << " " << num;}
 };

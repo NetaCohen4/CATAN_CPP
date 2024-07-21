@@ -57,9 +57,6 @@ class Catan {
 
     void distributeResources(size_t dice);
 
-    void buyRoad(Player &p, vector<string> places, vector<int> placesNum);
-    void buySettlement(Player &p, vector<string> places, vector<int> placesNum);
-    void buyCity(Player &p, vector<string> places, vector<int> placesNum);
     void buyDevelopmentCard(Player &p);
 
     void buyRoad(Player &p, int node1, int node2);
@@ -75,4 +72,6 @@ class Catan {
     void placeFirstRoad(Player &p, int node1, int node2);
 
     void addResources(Player &p, int node);
+    
+    void trade(Player &p1, Player &p2, string resource1, string resource2, unsigned int amount1, unsigned int amount2);
 };

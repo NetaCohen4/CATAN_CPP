@@ -120,22 +120,22 @@ TEST_CASE("Road legality checks") {
     }
     
     SUBCASE("Illegal roads") {
-        CHECK_THROWS_AS(board.isRoadLegal(0, 5), const char*);
-        CHECK_THROWS_AS(board.isRoadLegal(7, 10), const char*);
-        CHECK_THROWS_AS(board.isRoadLegal(21, 24), const char*);
+        CHECK_THROWS_AS(board.isRoadLegal(0, 5), string);
+        CHECK_THROWS_AS(board.isRoadLegal(7, 10), string);
+        CHECK_THROWS_AS(board.isRoadLegal(21, 24), string);
     }
 }
 TEST_CASE("Node neighbors") {
     Board board;
     
     SUBCASE("Check neighbors for specific nodes") {
-        std::vector<int> neighbors = board.nodeNeighbors(0);
+        std::vector<int> neighbors = nodeNeighbors(0);
         CHECK(neighbors == std::vector<int>({3, 4}));
         
-        neighbors = board.nodeNeighbors(12);
+        neighbors = nodeNeighbors(12);
         CHECK(neighbors == std::vector<int>({7, 8, 17}));
         
-        neighbors = board.nodeNeighbors(26);
+        neighbors = nodeNeighbors(26);
         CHECK(neighbors == std::vector<int>({20, 32}));
     }
 }

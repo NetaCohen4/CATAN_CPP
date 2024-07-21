@@ -76,12 +76,16 @@ int main()
         cout << e << endl;
     }
     
-    catan.rollDice(p1);                       // Lets say it's print 6. Then, p1 gets bricks from the hills.
-    p1.trade(p2, "wood", "brick", 1, 1); // p1 trades 1 wood for 1 brick with p2.
-    catan.endTurn();                        // p1 ends his turn.
+    catan.rollDice(p1);
+    try {
+        p1.trade(p2, "wood", "brick", 1, 1);
+    }
+    catch (const string e) {
+        cout << e << endl;
+    }
+    catan.endTurn();
 
-    catan.rollDice(p2);           // Lets say it's print 9. Then, p3 gets wool from the Pasture Land, p2 gets wool from the Pasture Land.
-    // p2 buys a development card. Lets say it is a bonus points card.
+    catan.rollDice(p2);
     try {
         catan.buyDevelopmentCard(p2); 
     }

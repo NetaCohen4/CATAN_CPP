@@ -60,18 +60,6 @@ TEST_CASE("Add resources") {
     // We need to implement getResources for test verification
 }
 
-TEST_CASE("Add resources by number") {
-    Player p1("Frank");
-    Board board;
-    vector<string> places = {"Forest", "Hills"};
-    vector<int> placesNum = {1, 2};
-
-    p1.placeSettelemnt(places, placesNum, board);
-    p1.addResourcesByNum(1);
-
-    // Print resources for visual verification
-    p1.printResources();
-}
 
 TEST_CASE("Use resources for road") {
     Player p1("Grace");
@@ -146,6 +134,8 @@ TEST_CASE("Build city at a settlement node") {
     Player p1("Mona");
     Board board;
     p1.placeSettelemnt(1, board);
+    vector<string> resources = {"Mountains", "Mountains", "Mountains", "Agricultural Land", "Agricultural Land"};
+    p1.addResources(resources);
     p1.buildCity(1);
 
     // Check if the settlement has been converted to a city
@@ -164,13 +154,6 @@ TEST_CASE("Testing resource usage methods for throwing exceptions") {
     CHECK_THROWS_WITH(player.useDevelopmentCardResources(), "You don't have the resources to buy a Development Card.");
 }
 
-TEST_CASE("Testing placeRoad for throwing exceptions") {
-    Board board;
-    Player player("TestPlayer");
-
-    // Trying to place a road without connecting it to a settlement or another road
-    CHECK_THROWS_WITH(player.placeRoad(1, 2), "Error: A Road must be settled by a settlement or by another road.");
-}
 
 TEST_CASE("Testing buildCity for throwing exceptions") {
     Board board;
