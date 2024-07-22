@@ -94,6 +94,18 @@ void Catan::buyDevelopmentCard(Player &p) {
     p.buyDevelopmentCard();
 }
 
+void Catan::playDevelopmentCard(Player &p, const std::string &kind) {
+    isItHisTurn(p);
+    vector<DevelopmentCard*> developmentCards= p.getDevelopmentCards();
+    for (DevelopmentCard* developmentCard : developmentCards) {
+        if (developmentCard->getName() == kind) {
+            developmentCard->play(p, *this);
+            p.removeDevelopmentCard(kind);
+            return;
+        }
+    }
+    std::cout << "You do not have a " << kind << " card to play.\n";
+}
 
 void Catan::isItHisTurn(Player &player) {
     if (p_turn->getName() != player.getName()) {

@@ -10,6 +10,11 @@
 #include <algorithm>
 #include "player.hpp"
 #include <stdexcept>
+#include "developmentCard/knightCard.hpp"
+#include "developmentCard/victoryPointCard.hpp"
+#include "developmentCard/monopolyCard.hpp"
+#include "developmentCard/roadBuildingCard.hpp"
+#include "developmentCard/yearOfPlentyCard.hpp"
 using namespace std;
 
 
@@ -63,9 +68,6 @@ void Player::changeAmountOfResource(string resource, int amount) {
     throw ("Error: There is no such resource as " + resource);
 }
 
-void Player::buyDevelopmentCard() {
-
-}
 
 void Player::printPoints() {
     cout << name << ": " << points << " points" << endl;
@@ -148,6 +150,14 @@ void Player::addResource(Land* p_land) {
     if (land_name == "Pasture Land") ++wool;
 }
 
+void Player::addResource(string resource) {
+    if (resource == "Forest") ++wood;
+    if (resource == "Hills") ++bricks;
+    if (resource == "Agricultural Land") ++wheat;
+    if (resource == "Mountains") ++ore;
+    if (resource == "Pasture Land") ++wool;
+}
+
 void Player::placeRoad(int node1, int node2) {
     Road newRoad(node1, node2);
     roads.push_back(newRoad);
@@ -205,4 +215,70 @@ bool Player::hasSettlementOrCity(int node) {
 
 void Player::addPoints(int num) {
     points += num;
+}
+
+void Player::buyDevelopmentCard() {
+    // Generate a random number to select a card type
+    int randomIndex = std::rand() % 5; // Update as more card types are added
+
+    DevelopmentCard* newCard = nullptr;
+    cout << "got here\n";
+    switch (randomIndex) {
+        case 0:
+            newCard = new KnightCard();
+            break;
+        case 1:
+            newCard = new VictoryPointCard();
+            break;
+        case 2:
+            newCard = new MonopolyCard();
+            break;
+        case 3:
+            newCard = new YearOfPlentyCard();
+            break;
+        case 4:
+            newCard = new RoadBuildingCard();
+            break;
+
+        // Add other cases for different card types
+        default:
+            newCard = new KnightCard(); // Default case (should not happen)
+            break;
+    }
+
+    developmentCards.push_back(newCard);
+}
+
+const std::vector<DevelopmentCard*>& Player::getDevelopmentCards() const {
+    return developmentCards;
+}
+/*
+void Player::playDevelopmentCard(const std::string &kind) {
+    for (auto it = developmentCards.begin(); it != developmentCards.end(); ++it) {
+        if ((*it)->getName() == kind) {
+            //(*it)->play(*this);
+            delete *it;
+            developmentCards.erase(it);
+            return;
+        }
+    }
+    std::cout << "You do not have a " << kind << " card to play.\n";
+}*/
+
+void Player::removeDevelopmentCard(const std::string &kind) {
+
+    for (auto it = developmentCards.begin(); it != developmentCards.end(); ++it) {
+        if ((*it)->getName() == kind) {
+            delete *it;
+            developmentCards.erase(it);
+            return;
+        }
+    }
+}
+
+void Player::addKnight() {
+    knights++;
+    if (knights == 3) {
+        points += 2;
+    }
 }

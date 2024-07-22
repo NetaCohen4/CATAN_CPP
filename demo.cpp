@@ -94,6 +94,10 @@ int main()
     }
     catan.endTurn();            // p2 ends his turn.
 
+    p3.buyDevelopmentCard();
+    catan.playDevelopmentCard(p3, "Knight");
+    catan.playDevelopmentCard(p3, "Victory Point");
+
     p1.printResources();
     p2.printResources();
     p3.printResources();

@@ -58,6 +58,7 @@ class Catan {
     void distributeResources(size_t dice);
 
     void buyDevelopmentCard(Player &p);
+    void playDevelopmentCard(Player &p, const std::string &kind); 
 
     void buyRoad(Player &p, int node1, int node2);
     void buySettlement(Player &p, int node);
