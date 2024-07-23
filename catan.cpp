@@ -61,7 +61,7 @@ void Catan::rollDice(Player &player) {
     size_t dice = dis(gen);
     dice += dis(gen);
     
-    cout << player.getName() << " thows " << dice << endl;
+    cout << player.getName() << " throws " << dice << endl;
     distributeResources(dice);
 }
 
