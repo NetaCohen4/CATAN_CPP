@@ -50,18 +50,23 @@ bool Player::hasResource(string resource, unsigned int amount) {
 
 void Player::changeAmountOfResource(string resource, int amount) {
     if (resource == "ore") {
+        if (ore + amount < 0) throw ((string)"Error: You have no ore to throw.");
         ore += amount;
         return;
     } else if (resource == "wheat") {
+        if (wheat + amount < 0) throw ((string)"Error: You have no wheat to throw.");
         wheat += amount;
         return;
     } else if (resource == "wool") {
+        if (wool + amount < 0) throw ((string)"Error: You have no wool to throw.");
         wool += amount;
         return;
     } else if (resource == "wood") {
+        if (wood + amount < 0) throw ((string)"Error: You have no wood to throw.");
         wood += amount;
         return;
     } else if (resource == "bricks") {
+        if (bricks + amount < 0) throw ((string)"Error: You have no bricks to throw.");
         bricks += amount;
         return;
     }
@@ -90,7 +95,7 @@ void Player::addResources(vector<string> &places) {
 }
 
 void Player::printResources() {
-    cout << name << " has: " << wool << " wool, " << wheat << " weat, " << ore << " ore, "
+    cout << name << " has: " << wool << " wool, " << wheat << " wheat, " << ore << " ore, "
      << bricks << " bricks, " << wood << " wood.\n";
 }
 
@@ -219,10 +224,9 @@ void Player::addPoints(int num) {
 
 void Player::buyDevelopmentCard() {
     // Generate a random number to select a card type
-    int randomIndex = std::rand() % 5; // Update as more card types are added
+    int randomIndex = std::rand() % 5; 
 
     DevelopmentCard* newCard = nullptr;
-    cout << "got here\n";
     switch (randomIndex) {
         case 0:
             newCard = new KnightCard();
@@ -252,18 +256,6 @@ void Player::buyDevelopmentCard() {
 const std::vector<DevelopmentCard*>& Player::getDevelopmentCards() const {
     return developmentCards;
 }
-/*
-void Player::playDevelopmentCard(const std::string &kind) {
-    for (auto it = developmentCards.begin(); it != developmentCards.end(); ++it) {
-        if ((*it)->getName() == kind) {
-            //(*it)->play(*this);
-            delete *it;
-            developmentCards.erase(it);
-            return;
-        }
-    }
-    std::cout << "You do not have a " << kind << " card to play.\n";
-}*/
 
 void Player::removeDevelopmentCard(const std::string &kind) {
 
@@ -280,5 +272,25 @@ void Player::addKnight() {
     knights++;
     if (knights == 3) {
         points += 2;
+    }
+}
+
+void Player::seven() {
+    int cardsNum = wool + wheat + ore + bricks + wood;
+    if (cardsNum > 7) {
+        cout << name << " you got more than 7 resource cards: ";
+        printResources();
+        cout << "Please choose " << cardsNum/2 <<" cards to throw.\n";
+        string card;
+        for (int i = 0; i < cardsNum/2; ++i) {
+            cin >> card;
+            try {
+                changeAmountOfResource(card, -1);
+            } 
+            catch (const string e) {
+                cout << e << endl;
+                ++i;
+            }
+        }
     }
 }

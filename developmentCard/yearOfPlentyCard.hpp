@@ -1,3 +1,9 @@
+/*
+    Neta Cohen
+    325195774
+    netaco432@gmail.com
+*/
+
 #pragma once
 
 #include "developmentCard.hpp"

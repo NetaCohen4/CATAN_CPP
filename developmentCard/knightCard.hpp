@@ -1,3 +1,9 @@
+/*
+    Neta Cohen
+    325195774
+    netaco432@gmail.com
+*/
+
 #pragma once
 
 #include "developmentCard.hpp"
@@ -10,7 +16,6 @@ class KnightCard : public DevelopmentCard {
         }
 
         void play(Player &player, Catan &game) override {
-            // Implement the effect of playing a Knight card
             std::cout << "playing a knight card\n";
             player.addKnight();
         }

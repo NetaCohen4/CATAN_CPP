@@ -1,3 +1,8 @@
+/*
+    Neta Cohen
+    325195774
+    netaco432@gmail.com
+*/
 
 #include "board.hpp"
 

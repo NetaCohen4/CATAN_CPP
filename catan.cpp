@@ -48,8 +48,9 @@ void Catan::printWinner() {
 }
 
 void Catan::rollDice(Player &player) {
-    cout << p_turn->getName() << "'s turn:\n";
     isItHisTurn(player);
+    cout << p_turn->getName() << "'s turn:\n";
+
     // Create a random device to seed the random number generator
     std::random_device rd;
     // Initialize the random number generator with the seed
@@ -59,6 +60,7 @@ void Catan::rollDice(Player &player) {
     // Generate a random number between 1 and 6
     size_t dice = dis(gen);
     dice += dis(gen);
+    
     cout << player.getName() << " thows " << dice << endl;
     distributeResources(dice);
 }
@@ -78,7 +80,9 @@ void Catan::endTurn() {
 
 void Catan::distributeResources(size_t dice) {
     if (dice == 7) {
-        
+        player1.seven();
+        player2.seven();
+        player3.seven();
     }
     else {
         player1.addResourcesByNum(dice);
@@ -107,7 +111,7 @@ void Catan::playDevelopmentCard(Player &p, const std::string &kind) {
     std::cout << "You do not have a " << kind << " card to play.\n";
 }
 
-void Catan::isItHisTurn(Player &player) {
+void Catan::isItHisTurn(Player &player) const {
     if (p_turn->getName() != player.getName()) {
         throw (player.getName() + " tried to make action out of turn");
     }
@@ -145,9 +149,9 @@ void Catan::buyRoad(Player &p, int node1, int node2) {
     isItHisTurn(p);
     board->isRoadLegal(node1, node2);
     isRoadAvailable(node1, node2);
-    //if (!p.hasSettlementOrCity(node1) && !p.hasSettlementOrCity(node2) && !p.hasRoad(node1) && !p.hasRoad(node2)) {
-    //    throw ("Error: A Road must be settled by a settlement or by another road.");
-    //}
+    if (!p.hasSettlementOrCity(node1) && !p.hasSettlementOrCity(node2) && !p.hasRoad(node1) && !p.hasRoad(node2)) {
+        throw ((string)"Error: A Road must be settled by a settlement or by another road.");
+    }
     p.useRoadResources();
     p.placeRoad(node1, node2);
 }
@@ -183,4 +187,28 @@ void Catan::addResources(Player &p, int node) {
 void Catan::trade(Player &p1, Player &p2, string resource1, string resource2, unsigned int amount1, unsigned int amount2) {
     isItHisTurn(p1);
     p1.trade(p2, resource1, resource2, amount1, amount2);
+}
+
+void Catan::monopoly(Player &p, string resource) {
+
+    if (p.getName() != player1.getName()) {
+        while (player1.hasResource(resource, 1)) {
+            player1.changeAmountOfResource(resource, -1);
+            p.changeAmountOfResource(resource, 1);
+        }
+    }
+
+    if (p.getName() != player2.getName()) {
+        while (player2.hasResource(resource, 1)) {
+            player2.changeAmountOfResource(resource, -1);
+            p.changeAmountOfResource(resource, 1);
+        }
+    }
+
+    if (p.getName() != player3.getName()) {
+        while (player3.hasResource(resource, 1)) {
+            player3.changeAmountOfResource(resource, -1);
+            p.changeAmountOfResource(resource, 1);
+        }
+    }
 }

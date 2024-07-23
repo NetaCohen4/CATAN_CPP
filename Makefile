@@ -1,8 +1,14 @@
+/*
+    Neta Cohen
+    325195774
+    netaco432@gmail.com
+*/
+
 # Compiler
 CXX = clang++
 
 # Compiler flags
-CXXFLAGS = -Wall -Wextra -std=c++11 #-I./include
+CXXFLAGS = -Wall -Wextra -std=c++11 
 
 # Source files
 SOURCES = player.cpp catan.cpp demo.cpp board.cpp
