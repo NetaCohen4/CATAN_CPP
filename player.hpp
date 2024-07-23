@@ -78,7 +78,6 @@ class Player {
         const std::vector<DevelopmentCard*>& getDevelopmentCards() const; 
         void buyDevelopmentCard();
         void removeDevelopmentCard(const std::string &kind);
-        //void playDevelopmentCard(const std::string &kind);
         void addKnight();
 
         void seven();

@@ -14,12 +14,6 @@ class Settlement {
         int node_code = -1;
         bool city = false;
 
-        // To be deleted:
-        //Land* land1;
-        //Land* land2;
-        //Land* land3;
-
-
     public:
         Settlement() {}
         Settlement(int node) : node_code(node) {}

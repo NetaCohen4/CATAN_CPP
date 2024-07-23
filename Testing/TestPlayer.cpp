@@ -20,7 +20,6 @@ TEST_CASE("Trade resources between players") {
 
     // After trade, p1 should have one less wood and one more brick
     // p2 should have one more wood and one less brick
-    // We need to implement getResources for test verification
 
     // Print resources for visual verification
     p1.printResources();

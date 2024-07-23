@@ -166,6 +166,7 @@ void Catan::placeFirstSettlement(Player &p, int node) {
     // Checking that the spot exists and available
     isNodeAvailable(node);
     p.placeSettelemnt(node, *board);
+    addResources(p, node);
 }
 
 void Catan::placeFirstRoad(Player &p, int node1, int node2) {

@@ -1,9 +1,3 @@
-/*
-    Neta Cohen
-    325195774
-    netaco432@gmail.com
-*/
-
 # Compiler
 CXX = clang++
 
@@ -17,7 +11,7 @@ SOURCES = player.cpp catan.cpp demo.cpp board.cpp
 OBJECTS = $(SOURCES:.cpp=.o)
 
 # Test source files
-TEST_SOURCES = Testing/TestCounter.cpp Testing/TestCatan.cpp #Testing/TestPlayer.cpp #Testing/TestBoard.cpp ## # # #
+TEST_SOURCES = Testing/TestCounter.cpp Testing/TestCatan.cpp #Testing/TestPlayer.cpp #Testing/TestBoard.cpp # # # ## # # #
 
 # Test object files
 TEST_OBJECTS = $(TEST_SOURCES:.cpp=.o)

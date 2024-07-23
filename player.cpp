@@ -7,6 +7,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <random>
 #include <algorithm>
 #include "player.hpp"
 #include <stdexcept>
@@ -224,7 +225,15 @@ void Player::addPoints(int num) {
 
 void Player::buyDevelopmentCard() {
     // Generate a random number to select a card type
-    int randomIndex = std::rand() % 5; 
+    //int randomIndex = std::rand() % 5; 
+    // Create a random device to seed the random number generator
+    std::random_device rd;
+    // Initialize the random number generator with the seed
+    std::mt19937 gen(rd());
+    // Define a distribution that produces numbers between 1 and 6 (inclusive)
+    std::uniform_int_distribution<> dis(0, 4);
+    // Generate a random number between 1 and 6
+    size_t randomIndex = dis(gen);
 
     DevelopmentCard* newCard = nullptr;
     switch (randomIndex) {

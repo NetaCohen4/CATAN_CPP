@@ -27,11 +27,9 @@ int main()
 
     catan.placeFirstSettlement(p1, 12);
     catan.placeFirstRoad(p1, 12, 17);
-    catan.addResources(p1, 12);
 
     catan.placeFirstSettlement(p2, 9);
     catan.placeFirstRoad(p2, 9, 13);
-    catan.addResources(p2, 9);
 
     try
     {
@@ -41,7 +39,8 @@ int main()
     {
         cout << e << endl;
     }
-    try {
+    try 
+    {
         catan.placeFirstSettlement(p3, 7);
     }
     catch (const string e)
@@ -56,7 +55,7 @@ int main()
 
     cout << "\nGame starts!\n\n";
     // p1 has wood, bricks, and wheat, p2 has wood, ore, and wool, p3 has ore, wool, wheat.
-    catan.rollDice(p1);   // Lets say it's print 4. Then, p2 gets ore from the mountations.
+    catan.rollDice(p1);
     try {
         catan.buyRoad(p1, 23, 29);
     }
@@ -96,17 +95,18 @@ int main()
     }
     catan.endTurn();            // p2 ends his turn.
 
-    p3.buyDevelopmentCard();
+    try {
+        catan.buyDevelopmentCard(p3); 
+    }
+    catch (const string e) {
+        cout << e << endl;
+    }
     catan.playDevelopmentCard(p3, "Knight");
     catan.playDevelopmentCard(p3, "Victory Point");
 
     p1.printResources();
     p2.printResources();
     p3.printResources();
-
-    p1.printPoints(); // p1 has 2 points because it has two settelments.
-    p2.printPoints(); // p2 has 3 points because it has two settelments and a bonus points card.
-    p3.printPoints(); // p3 has 2 points because it has two settelments.
 
     catan.printWinner(); // Should print None because no player reached 10 points.
     

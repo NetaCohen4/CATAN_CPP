@@ -20,6 +20,31 @@ TEST_CASE("Test new Catan") {
     //CHECK_THROWS(Catan c(p1, p1, p1));
 }
 
+TEST_CASE("Test Catan Functionality") {
+    // Create players
+    Player p1("Alice");
+    Player p2("Bob");
+    Player p3("Charlie");
+
+    // Initialize the Catan game
+    Catan game(p1, p2, p3);
+
+    // Test chooseStartingPlayer
+    game.chooseStartingPlayer();
+    CHECK_THROWS_WITH(game.isItHisTurn(p3), "Charlie tried to make action out of turn");
+
+    // Create and set the board
+    Board board;
+    game.setBoard(&board);
+
+    p1.buyDevelopmentCard();
+    game.playDevelopmentCard(p1, "Knight");
+    game.playDevelopmentCard(p1, "Victory Point");
+    game.playDevelopmentCard(p1, "Monopoly");
+    game.playDevelopmentCard(p1, "Road Building");
+    game.playDevelopmentCard(p1, "Year of Plenty");
+}
+
 TEST_CASE("Test Catan Game Functionality") {
     // Create players
     Player p1("Alice");
@@ -87,107 +112,28 @@ TEST_CASE("Test Building Settlements, Cities, and Roads") {
     CHECK_NOTHROW(game.buyRoad(p1, 1, 4));
     CHECK_THROWS_WITH_AS(game.buyRoad(p1, 1, 4), "Error: Attempt of building a road in an unavailable place", std::string);
 }
-/*
+
 TEST_CASE("Test Resource Distribution") {
-    Player p1("Alice", 0);
-    Player p2("Bob", 0);
-    Player p3("Charlie", 0);
+    Player p1("Alice");
+    Player p2("Bob");
+    Player p3("Charlie");
 
     Catan game(p1, p2, p3);
     game.chooseStartingPlayer();
     Board board;
+    board.createBestBoard();
     game.setBoard(&board);
+
+    game.placeFirstSettlement(p1, 12);
+    game.placeFirstRoad(p1, 12, 17);
+
+    game.placeFirstSettlement(p2, 9);
+    game.placeFirstRoad(p2, 9, 13);
 
     // Test distributeResources
     game.distributeResources(6);
 
-    // Assuming addResourcesByNum is properly defined, you can test the resources
-    CHECK(p1.getResources(6) > 0);
+    p1.printResources();
+    p2.printResources();
+
 }
-
-TEST_CASE("Test End Turn") {
-    Player p1("Alice", 0);
-    Player p2("Bob", 0);
-    Player p3("Charlie", 0);
-
-    Catan game(p1, p2, p3);
-    game.chooseStartingPlayer();
-
-    // Test endTurn
-    game.endTurn();
-    CHECK(game.p_turn->getName() == "Bob");
-    game.endTurn();
-    CHECK(game.p_turn->getName() == "Charlie");
-    game.endTurn();
-    CHECK(game.p_turn->getName() == "Alice");
-}
-*/
-/*
-TEST_CASE("Test new Catan") {
-    
-    Player newPlayer("player");
-    //CHECK_THROWS(Catan newCatan(newPlayer, newPlayer, newPlayer));
-
-    vector<string> places = {"Mountains", "Pasture Land", "Agricultural Land"};
-    vector<int> placesNum =  {10, 2, 12};
-    newPlayer.placeSettelemnt(places, placesNum, board);
-    
-    newPlayer.addResourcesByNum(10);
-    newPlayer.addResourcesByNum(2);
-    newPlayer.addResourcesByNum(12);
-    newPlayer.printResources();
-
-    CHECK(newPlayer.getPoints() == 0);
-  
-}
-
-TEST_CASE("Catan Initialization") {
-    Player p1("Alice");
-    Player p2("Bob");
-    Player p3("Charlie");
-
-    Catan game(p1, p2, p3);
-
-    //CHECK(game.getCurrentPlayer()->getName() == "Alice");
-    //CHECK_THROWS_AS(Catan(p1, p1, p3), std::runtime_error);  // Should throw due to duplicate player names
-}
-*/
-
-TEST_CASE("Catan Turns and Dice Roll") {
-    Player p1("Alice");
-    Player p2("Bob");
-    Player p3("Charlie");
-    Catan game(p1, p2, p3);
-    Board board;
-    board.createBestBoard();
-    game.setBoard(&board);
-/*
-    //CHECK_NOTHROW(game.rollDice(p1));
-    game.rollDice(p1);
-    game.endTurn();
-    //CHECK_NOTHROW(game.rollDice(p2));
-    game.rollDice(p2);
-    game.endTurn();
-    //CHECK_NOTHROW(game.rollDice(p3));
-    game.rollDice(p3);
-    game.endTurn();
-    //CHECK_THROWS_AS(game.rollDice(p2), std::runtime_error);  // Not Bob's turn
-    */
-}
-/*
-TEST_CASE("Catan Winning Conditions") {
-    Player p1("Alice");
-    Player p2("Bob");
-    Player p3("Charlie");
-    Catan game(p1, p2, p3);
-
-    CHECK_FALSE(game.isThereWinner());
-
-    Board board;
-    for (int i = 0; i < 10; ++i) {
-        p1.placeSettelemnt({"Forest", "Hills"}, {3, 5}, board);
-    }
-
-    CHECK(game.isThereWinner());
-}
-*/
